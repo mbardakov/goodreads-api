@@ -28,15 +28,13 @@ def get_book(id):
     series_link = series['href']
     print(series_name, series_entry, series_link)
     return {
-        book_rating,
-        rating_count,
-        review_count,
-        author_name,
-        author_link,
-        title,
-        series_name,
-        series_entry,
-        series_link
+        'book_rating': book_rating,
+        'rating_count': rating_count,
+        'review_count': review_count,
+        'author_name': author_name,
+        'author_link': author_link,
+        'title': title,
+        'series_name': series_name,
+        'series_entry': series_entry,
+        'series_link': series_link
     }
-
-get_book('50702014-paladin-s-grace')

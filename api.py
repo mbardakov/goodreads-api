@@ -14,5 +14,9 @@ def get_tbr(userid):
     page = request.args.get('page')
     return jsonify(goodreads.get_shelf(userid, 'to-read', page))
 
+@app.route('/book/<string:bookid>/', methods=['GET'])
+def get_book(bookid):
+    return jsonify(goodreads.get_book(bookid))
+
 if __name__ == '__main__':
     app.run()
