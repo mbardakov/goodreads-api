@@ -2,9 +2,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import re
 
-tbr = 'https://www.goodreads.com/review/list/150603697?shelf=to-read'
-my_id = '150603697'
-def get_books(id=my_id, shelf='to-read'):
+def get_shelf(id, shelf='to-read'):
     url = "https://www.goodreads.com/review/list/{0}?shelf={1}".format(id, shelf)
     r = urlopen(url)
     full_page = BeautifulSoup(r, 'html.parser')
