@@ -2,8 +2,9 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import re
 
-def get_shelf(id, shelf='to-read'):
-    url = "https://www.goodreads.com/review/list/{0}?shelf={1}".format(id, shelf)
+def get_shelf(id, shelf='to-read', page=1):
+    print('get_shelf called with: {0} {1} {2}'.format(id, shelf, page))
+    url = "https://www.goodreads.com/review/list/{0}?shelf={1}&page={2}".format(id, shelf, page)
     r = urlopen(url)
     full_page = BeautifulSoup(r, 'html.parser')
     raw_links = full_page.find_all(href=re.compile("/book/show"))

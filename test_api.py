@@ -16,6 +16,12 @@ my_id = '150603697'
 jessie_id = '84639839'
 
 def test_get_tbr(client):
-    print(client)
     response = client.get("/tbr/150603697/")
     assert response.status_code == 200
+    assert response.json and response.json["books"] and response.json["next_link"]
+
+def test_pages(client):
+    response_1 = client.get("/tbr/150603697/")
+    response_2 = client.get("/tbr/150603697/?page=2")
+    assert response_1.json and response_2.json
+    assert response_1.json["books"] != response_2.json["books"]

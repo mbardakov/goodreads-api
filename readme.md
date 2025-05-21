@@ -8,9 +8,12 @@ An API to access data from Goodreads, as Goodreads themselves no longer provide 
 
 Route: `/`  
 Verb:  `GET`  
-Returns:  `hello`  
+Returns:  
+```
+hello
+```  
 
-Route: `/tbr/<userid>/`  
+Route: `/tbr/<userid>?page=<page>`  
 Verb: `GET`  
 Returns:  
 ```json
