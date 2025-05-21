@@ -24,9 +24,11 @@ def get_book(id):
     author_link = book_main_content.find('a', {'class': 'ContributorLink'})['href']
     title = book_main_content.find('h1', {'data-testid': 'bookTitle'}).decode_contents()
     series = book_main_content.find('div', {'class': 'BookPageTitleSection__title'}).find('a')
-    [series_name, series_entry] = map(lambda x: x.strip(), series.decode_contents().split('<!-- -->'))
-    series_link = series['href']
-    print(series_name, series_entry, series_link)
+    if (series is not None):
+        [series_name, series_entry] = map(lambda x: x.strip(), series.decode_contents().split('<!-- -->'))
+        series_link = series['href']
+    else:
+        [series_name, series_entry, series_link] = [None, None, None]
     return {
         'book_rating': book_rating,
         'rating_count': rating_count,
