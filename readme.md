@@ -16,7 +16,7 @@ hello
 Route: `/tbr/<int:userid>?page=<page>`  
 Verb: `GET`  
 Returns:  
-```json
+```
 {
     'books': [
         'string': 'bookId'
@@ -28,7 +28,7 @@ Returns:
 Route: `/book/<str:bookid>`  
 Verb: `GET`  
 Returns:  
-```json
+```
 {	
     'author_link':	string,
     'author_name':	string,
