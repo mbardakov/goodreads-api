@@ -46,17 +46,29 @@ def get_book(id):
     }
 
 def get_author(id):
+    author_id = id.split('.')[0]
     url = "https://www.goodreads.com/author/show/{0}".format(id)
     res = urlopen(url)
     full_page = BeautifulSoup(res, 'html.parser')
+    author_main_content = full_page.find('div', {'class': 'mainContent'})
+    author_name = author_main_content.find('h1', {'class': 'authorName'}).find('span').decode_contents()
+    average_rating = author_main_content.find('span', {'class': 'rating'}).find('span', {'class': 'average'}).decode_contents()
+    author_bio_html = author_main_content.find('span', {'id': 'freeTextContainerauthor{0}'.format(author_id)}).decode_contents()
+    author_bio = re.sub('</?[a-z][a-z0-9]*[^<>]*>|<!--.*?-->', '', author_bio_html)
+    return {
+        'author_id' : author_id,
+        'author_name' : author_name,
+        'average_rating' : average_rating,
+        'author_bio' : author_bio,
+    }
+
+def get_author_books(id, page=1):
+    url = "https://www.goodreads.com/author/list/{0}?page={1}&per_page=30".format(id, page)
+    res = urlopen(url)
+    full_page = BeautifulSoup(res, 'html.parser')
+    print(full_page.prettify())
     return {
         'author' : None
     }
 
-def get_author_books(id):
-    url = "https://www.goodreads.com/author/list/{0}".format(id)
-    res = urlopen(url)
-    full_page = BeautifulSoup(res, 'html.parser')
-    return {
-        'author' : None
-    }
+print(get_author('7367300'))

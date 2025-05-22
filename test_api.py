@@ -70,3 +70,11 @@ def test_book_not_in_series(client):
     assert not response.json['series_name']
     assert not response.json['series_entry']
     assert not response.json['series_link']
+
+def get_author(client):
+    response = client.get('/author/7367300')
+    assert response.status_code == 200
+    assert response.json['author_id']
+    assert response.json['author_name']
+    assert response.json['average_rating']
+    assert response.json['author_bio']
