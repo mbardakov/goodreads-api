@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from util import parse_num
+from datetime import datetime
 import re
 
 def get_shelf(id, shelf='to-read', page=1):
@@ -16,6 +17,7 @@ def get_book(id):
     url = "https://www.goodreads.com/book/show/{0}".format(id)
     res = urlopen(url)
     full_page = BeautifulSoup(res, 'html.parser')
+
     book_main_content = full_page.find('div', {'class': 'BookPage__mainContent'})
     book_rating = book_main_content.find('div', {'class': 'RatingStatistics__rating'}).decode_contents()
     rating_count = parse_num(book_main_content.find('span', {'data-testid': 'ratingsCount'}).decode_contents())
@@ -24,6 +26,7 @@ def get_book(id):
     author_link = book_main_content.find('a', {'class': 'ContributorLink'})['href']
     title = book_main_content.find('h1', {'data-testid': 'bookTitle'}).decode_contents()
     series = book_main_content.find('div', {'class': 'BookPageTitleSection__title'}).find('a')
+    release_date = book_main_content.find('p', {'data-testid': 'publicationInfo'}).decode_contents().replace('Expected publication ', '').replace('First published ', '')
     if (series is not None):
         [series_name, series_entry] = map(lambda x: x.strip(), series.decode_contents().split('<!-- -->'))
         series_link = series['href']
@@ -38,5 +41,22 @@ def get_book(id):
         'title': title,
         'series_name': series_name,
         'series_entry': series_entry,
-        'series_link': series_link
+        'series_link': series_link,
+        'release_date': datetime.strptime(release_date, '%B %d, %Y').strftime('%Y/%m/%d')
+    }
+
+def get_author(id):
+    url = "https://www.goodreads.com/author/show/{0}".format(id)
+    res = urlopen(url)
+    full_page = BeautifulSoup(res, 'html.parser')
+    return {
+        'author' : None
+    }
+
+def get_author_books(id):
+    url = "https://www.goodreads.com/author/list/{0}".format(id)
+    res = urlopen(url)
+    full_page = BeautifulSoup(res, 'html.parser')
+    return {
+        'author' : None
     }

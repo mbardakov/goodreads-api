@@ -18,5 +18,9 @@ def get_tbr(userid):
 def get_book(bookid):
     return jsonify(goodreads.get_book(bookid))
 
+@app.route('/author/<string:authorid>/', methods=['GET'])
+def get_author(authorid):
+    return jsonify(goodreads.get_author(authorid))
+
 if __name__ == '__main__':
     app.run()
